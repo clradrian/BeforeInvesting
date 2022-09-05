@@ -6,11 +6,12 @@ from utils import calculate_long_numbers
 from datetime import datetime
 
 class GetFinancials:
-    def __init__(self, company_ticker):
+    def __init__(self, company_ticker, exported_info_folder):
         self.company_ticker = company_ticker
+        self.exported_info_folder = exported_info_folder
 
     def get_net_income_df(self, column_name):
-        df_financials = pd.read_csv(r"C:\Users\Chelariu's\PycharmProjects\git\git_BeforeInvesting\BeforeInvesting\exported_info\MSFT\MSFT_financials_info.csv", index_col=0)
+        df_financials = pd.read_csv(f"{self.exported_info_folder}\{self.company_ticker}\{self.company_ticker}_financials_info.csv", index_col=0)
         t_get_df_financials = df_financials.T
         get_net_income_column = t_get_df_financials[column_name]
         return get_net_income_column
