@@ -2,7 +2,8 @@ from PIL import Image, ImageDraw, ImageFont
 from api import GetDomainLogo
 import os
 from datetime import date
-from utils import get_photo_location, initialize_photos
+from utils import get_photo_location, check_and_create_folder
+from create_structure import *
 
 class Draw:
     def __init__(self, image_path):
@@ -20,20 +21,6 @@ class Draw:
         my_font = ImageFont.truetype(font_path, size)
         return my_font
 
-    def initialize_fonts(self, default_fonts_location=r"C:\Users\Chelariu's\PycharmProjects\BeforeInvesting\\fonts\\", font_name="AppleGaramond.ttf"):
-        """ This function is used to initialize fonts location """
-        return default_fonts_location + font_name
-
-    def check_and_create_folder(self, folder_name="\exported_photos"):
-        print(f'The current working directory is: {self.default_location}')
-        folder_location = self.default_location + folder_name
-        print(f'Create folder were photos will be exported...')
-        if os.path.isdir(folder_location):
-            print(f'The {folder_name} already exists! Continuing...')
-        else:
-            os.mkdir(folder_location)
-            print(f'{folder_name} created! Location: {folder_location}')
-        return folder_location
 
     def save_photo(self, ticker, folder_location, img):
         image_name = ticker + ".png"
@@ -43,11 +30,11 @@ class Draw:
         return folder_location + image_name
 
     def draw_stock_information(self, stock_information):
-        folder_location = self.check_and_create_folder()
-        photo_location = initialize_photos()
+        folder_location = check_and_create_folder()
+        photo_location = self.default_location + '\\default_image\\single_default.png'
         img = Image.open(photo_location)
         draw_image = ImageDraw.Draw(img)
-        font_location = self.initialize_fonts()
+        font_location = self.default_location + '\\fonts\\AppleGaramond.ttf'
         main_font = self.open_fonts(font_location, 60)
         second_font = self.open_fonts(font_location, 40)
         info_font = self.open_fonts(font_location, 20)
@@ -114,7 +101,7 @@ class Draw:
 
     def update_photo_company_logo(self, ticker, url):
         os.chdir(self.default_location)
-        folder_location = self.check_and_create_folder()
+        folder_location = check_and_create_folder()
         image_to_be_updated = get_photo_location(ticker, folder_location)
         img = Image.open(image_to_be_updated).convert("RGBA")
         logo = GetDomainLogo(url).convert("RGBA")

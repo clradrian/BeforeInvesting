@@ -5,7 +5,7 @@ from numerize import numerize
 from utils import calculate_long_numbers
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
-from utils import get_photo_location, initialize_photos, check_and_create_folder
+from utils import get_photo_location, check_and_create_folder
 
 
 class GetFinancials:
@@ -53,8 +53,9 @@ class GetFinancials:
 
     def default_net_income(self, default_location):
         os.chdir(default_location)
+        default_image_location = default_location + '\\default_image'
         self.create_net_income_plot()
-        image_to_be_updated = initialize_photos()
+        image_to_be_updated = default_image_location + "\\single_default.png"
         img = Image.open(image_to_be_updated)
         os.chdir(default_location)
         folder_location = check_and_create_folder(folder_name="\exported_photos")

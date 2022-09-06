@@ -28,8 +28,3 @@ def get_photo_location(ticker, folder_location):
     folder_location = folder_location + '\\'
     os.chdir(folder_location)
     return folder_location + image_name
-
-def initialize_photos(default_photos_location=r"C:\Users\Chelariu's\PycharmProjects\git\git_BeforeInvesting\BeforeInvesting\default_photos\\", photo_name="single_default.png"):
-    """ This function is used to initialize photos location """
-    return default_photos_location + photo_name
-
