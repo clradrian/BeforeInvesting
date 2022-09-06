@@ -40,8 +40,8 @@ class Investing(Draw):
             dict_ticker["day_low"] = company_info["dayLow"]
             dict_ticker["day_high"] = company_info["dayHigh"]
             dict_ticker["logo_url"] = company_info['logo_url']
-        except:
-            pass
+        except  Exception as e:
+            print(e)
         dividend_yield = ''
         if company_info['dividendRate']:
             dividend_rate = company_info['dividendRate']

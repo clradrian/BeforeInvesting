@@ -1,3 +1,5 @@
+import os
+
 from utils import check_and_create_folder
 import get_financial
 from get_basic_info import *
@@ -32,6 +34,7 @@ def create_info_files(company):
 
 
 def create_main_image(company_ticker):
+    os.chdir(default_location)
     print(f"Start getting the information for the {company_ticker} stock...")
     invest_class = Investing(company_ticker, exported_info_folder)
     stock_information = invest_class.get_stock_information()
@@ -40,19 +43,29 @@ def create_main_image(company_ticker):
     print(f"Updating photo with the {company_ticker} logo...")
     invest_class.update_photo_company_logo(stock_information["ticker"], stock_information["logo_url"])
 
+
 def create_financial_charts(company):
     get_financials = get_financial.GetFinancials(company, exported_info_folder)
-    print(f"Creating plot to see the Net Income for {company}")
-    get_financials.default_net_income(default_location)
+    print(f"Creating plot to see Financials details about {company}")
+    company_folder = check_and_create_folder(f'\{company}')
+    os.chdir(company_folder)
+    get_financials.default_net_income(default_location, column_name="Net Income")
+    get_financials.default_net_income(default_location, column_name="Research Development")
+    get_financials.default_net_income(default_location, column_name="Income Before Tax")
+    get_financials.default_net_income(default_location, column_name="Gross Profit")
+    get_financials.default_net_income(default_location, column_name="Ebit")
+    get_financials.default_net_income(default_location, column_name="Gross Profit")
+    get_financials.default_net_income(default_location, column_name="Total Revenue")
+    get_financials.default_net_income(default_location, column_name="Income Before Tax")
+
 
 if __name__ == '__main__':
-    company_list = ["AAPL"]
-    # , "MSFT", "TSLA"]
+    company_list = ["AAPL", "MSFT", "TSLA", "AMZN"]
 
     print(f'Creating the structure folders...')
     create_structure()
 
     for company in company_list:
-        # create_info_files(company)
+        create_info_files(company)
         create_main_image(company)
         create_financial_charts(company)
