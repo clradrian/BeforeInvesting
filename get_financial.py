@@ -1,9 +1,12 @@
-import yfinance as yf
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from numerize import numerize
 from utils import calculate_long_numbers
 from datetime import datetime
+from PIL import Image, ImageDraw, ImageFont
+from utils import get_photo_location, initialize_photos, check_and_create_folder
+
 
 class GetFinancials:
     def __init__(self, company_ticker, exported_info_folder):
@@ -31,6 +34,7 @@ class GetFinancials:
         return sorted(date_axis), sorted(transformed_values)
 
     def create_net_income_plot(self):
+        folder_location = check_and_create_folder(folder_name="\exported_photos")
         x_axis, y_axis = self.change_axis()
         int_list = []
         for value in y_axis:
@@ -38,10 +42,27 @@ class GetFinancials:
             get_last_ch = value[-1]
             int_list.append(float(delete_last_ch))
         plt.style.use('dark_background')
-        plt.bar(x_axis, int_list, color='green',
-                width=0.6)
+        plt.bar(x_axis, int_list, color="#77BC3F",
+                width=0.6, edgecolor='white')
         plt.margins(0.1, 0.1)
         # plt.xlabel("Date")
-        plt.ylabel(f"Net Income ({get_last_ch})")
-        plt.title(f"{self.company_ticker} Net Income")
-        plt.show()
+        os.chdir(folder_location)
+        plt.ylabel(f"Net Income ({get_last_ch})", fontweight='bold')
+        plt.title(f"{self.company_ticker} - Net Income", fontweight='bold', size=16)
+        plt.savefig(f'{self.company_ticker}_Net_Income.png', bbox_inches='tight')
+
+    def default_net_income(self, default_location):
+        os.chdir(default_location)
+        self.create_net_income_plot()
+        image_to_be_updated = initialize_photos()
+        img = Image.open(image_to_be_updated)
+        os.chdir(default_location)
+        folder_location = check_and_create_folder(folder_name="\exported_photos")
+        net_income_image = get_photo_location(self.company_ticker + "_Net_Income", folder_location)
+        net_income_image_open = Image.open(net_income_image)
+        image_w, image_h = img.size
+        net_income = net_income_image_open.resize((800, 700))
+        net_w, net_h = net_income.size
+        offset = ((image_w - net_w) // 2, (image_h - net_h) // 2)
+        img.paste(net_income, offset, net_income)
+        img.save(f"{self.company_ticker}_Net_Income_Updated.png")

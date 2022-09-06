@@ -2,8 +2,9 @@ from PIL import Image, ImageDraw, ImageFont
 from api import GetDomainLogo
 import os
 from datetime import date
+from utils import get_photo_location, initialize_photos
 
-class Draw():
+class Draw:
     def __init__(self, image_path):
         self.image_path = image_path
 
@@ -18,10 +19,6 @@ class Draw():
         """ This function is used to initialize fonts """
         my_font = ImageFont.truetype(font_path, size)
         return my_font
-
-    def initialize_photos(self, default_photos_location=r"C:\Users\Chelariu's\PycharmProjects\BeforeInvesting\default_photos\\", photo_name="single_default.png"):
-        """ This function is used to initialize photos location """
-        return default_photos_location + photo_name
 
     def initialize_fonts(self, default_fonts_location=r"C:\Users\Chelariu's\PycharmProjects\BeforeInvesting\\fonts\\", font_name="AppleGaramond.ttf"):
         """ This function is used to initialize fonts location """
@@ -38,12 +35,6 @@ class Draw():
             print(f'{folder_name} created! Location: {folder_location}')
         return folder_location
 
-    def get_photo_location(self, ticker, folder_location):
-        image_name = ticker + ".png"
-        folder_location = folder_location + '\\'
-        os.chdir(folder_location)
-        return folder_location + image_name
-
     def save_photo(self, ticker, folder_location, img):
         image_name = ticker + ".png"
         os.chdir(folder_location)
@@ -53,7 +44,7 @@ class Draw():
 
     def draw_stock_information(self, stock_information):
         folder_location = self.check_and_create_folder()
-        photo_location = self.initialize_photos()
+        photo_location = initialize_photos()
         img = Image.open(photo_location)
         draw_image = ImageDraw.Draw(img)
         font_location = self.initialize_fonts()
@@ -109,7 +100,7 @@ class Draw():
                 draw_image.text((general_information_left_part, general_information_right_part + 200), "Dividend yield: 0%", fill=font_color, font=second_font,
                                 align="left")
 
-            t4_width, t4_height = draw_image.textsize("*informations provided by Yahoo Finance",info_font)  # Get text3 size
+            t4_width, t4_height = draw_image.textsize("*informations provided by Yahoo Finance", info_font)  # Get text3 size
             p4 = ((w - t4_width) / 2, h // 1.05)  # H-center align text1
             draw_image.text(p4, "*informations provided by Yahoo Finance", fill=font_color, font=info_font, align="center")
 
@@ -124,7 +115,7 @@ class Draw():
     def update_photo_company_logo(self, ticker, url):
         os.chdir(self.default_location)
         folder_location = self.check_and_create_folder()
-        image_to_be_updated = self.get_photo_location(ticker, folder_location)
+        image_to_be_updated = get_photo_location(ticker, folder_location)
         img = Image.open(image_to_be_updated).convert("RGBA")
         logo = GetDomainLogo(url).convert("RGBA")
         logo.putalpha(60) #blur photo
