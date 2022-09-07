@@ -87,9 +87,9 @@ class Draw:
                 draw_image.text((general_information_left_part, general_information_right_part + 200), "Dividend yield: 0%", fill=font_color, font=second_font,
                                 align="left")
 
-            t4_width, t4_height = draw_image.textsize("*informations provided by Yahoo Finance", info_font)  # Get text3 size
-            p4 = ((w - t4_width) / 2, h // 1.05)  # H-center align text1
-            draw_image.text(p4, "*informations provided by Yahoo Finance", fill=font_color, font=info_font, align="center")
+            # t4_width, t4_height = draw_image.textsize("*informations provided by Yahoo Finance", info_font)  # Get text3 size
+            # p4 = ((w - t4_width) / 2, h // 1.05)  # H-center align text1
+            # draw_image.text(p4, "*informations provided by Yahoo Finance", fill=font_color, font=info_font, align="center")
 
             current_date = self.get_date()
             t5_width, t5_height = draw_image.textsize("(" + current_date + ")", second_font)  # Get text3 size

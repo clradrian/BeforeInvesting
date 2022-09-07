@@ -36,7 +36,7 @@ class Informations:
             transformed_values.append(new_values)
         return sorted(date_axis), sorted(transformed_values)
 
-    def create_balance_sheet_plot(self, column_name):
+    def create_plot(self, column_name):
         folder_location = check_and_create_folder(folder_name="\exported_photos")
         x_axis, y_axis = self.change_axis(column_name)
         int_list = []
@@ -59,7 +59,7 @@ class Informations:
 
     def default_sheet(self, default_location, column_name):
         os.chdir(default_location)
-        self.create_balance_sheet_plot(column_name)
+        self.create_plot(column_name)
         image_to_be_updated = default_location + '\\default_image\\single_default.png'
         img = Image.open(image_to_be_updated)
         os.chdir(default_location)
@@ -74,4 +74,5 @@ class Informations:
         img.paste(net_income, offset, net_income)
         # company_location = check_and_create_folder(folder_name=f"\{self.company_ticker}")
         # os.chdir(company_location)
+        os.remove(net_income_image)
         img.save(f"{self.company_ticker}_{self.get_info}_{column_name}.png")

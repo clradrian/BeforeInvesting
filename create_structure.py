@@ -17,13 +17,13 @@ class CreateStructureFolder:
             else:
                 os.mkdir(folder)
 
-    def create_default_image(self):
-        default_image = self.default_location + '\\default_image'
-        logo_path = self.default_location + '\\logo\\logo.jpg'
-        os.chdir(default_image)
-        default_img = Image.new(mode="RGB", size=(1080, 1080))
-        logo_image_open = Image.open(logo_path).convert("RGBA")
-        offset = (450, 20)
-        default_img.paste(logo_image_open, offset, logo_image_open)
-        default_img.save("single_default.png")
-        os.chdir(self.default_location)
+    # def create_default_image(self):
+    #     default_image = self.default_location + '\\default_image'
+    #     logo_path = self.default_location + '\\logo\\logo.jpg'
+    #     os.chdir(default_image)
+    #     default_img = Image.new(mode="RGB", size=(1080, 1080))
+    #     logo_image_open = Image.open(logo_path).convert("RGBA")
+    #     offset = (450, 20)
+    #     default_img.paste(logo_image_open, offset, logo_image_open)
+    #     default_img.save("single_default.png")
+    #     os.chdir(self.default_location)

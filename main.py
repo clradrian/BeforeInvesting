@@ -2,10 +2,12 @@ import os
 
 from utils import check_and_create_folder
 from get_basic_info import *
-from get_historical_market_data import *
 from create_metadata import *
 from create_structure import *
 import create_plots
+import recommendations
+import get_historical_market_data
+
 
 default_location = os.getcwd()
 exported_info_folder = default_location + "\exported_info"
@@ -15,7 +17,7 @@ exported_info_folder = default_location + "\exported_info"
 def create_structure():
     create_folder_structure = CreateStructureFolder(default_location)
     create_folder_structure.create_structure()
-    create_folder_structure.create_default_image()
+    # create_folder_structure.create_default_image()
 
 
 def create_info_files(company):
@@ -108,12 +110,23 @@ def create_cashflow_charts(company):
     # os.chdir(company_folder)
     get_info_cashflow.default_sheet(default_location, column_name="Dividends Paid")
 
+
 def create_all_charts(company):
     create_cashflow_charts(company)
     create_financial_charts(company)
     create_balance_sheet_charts(company)
     create_quarterly_balance_sheet_charts(company)
     create_quarterly_financial_charts(company)
+
+
+def get_recommendations(company):
+    get_recommendations = recommendations.Recommendations(company, exported_info_folder)
+    get_recommendations.get_recommendations_df()
+
+
+def get_historical_data(default_location):
+    historical_data = get_historical_market_data.GetHistoricalData(company, default_location)
+    historical_data.get_historical_data()
 
 if __name__ == '__main__':
     company_list = ["AAPL", "MSFT"]
@@ -122,6 +135,7 @@ if __name__ == '__main__':
     create_structure()
 
     for company in company_list:
-        # create_info_files(company)
-        # create_main_image(company)
+        get_historical_data(default_location)
+        create_info_files(company)
+        create_main_image(company)
         create_all_charts(company)
