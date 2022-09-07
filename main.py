@@ -1,11 +1,11 @@
 import os
 
 from utils import check_and_create_folder
-import get_financial
 from get_basic_info import *
 from get_historical_market_data import *
 from create_metadata import *
 from create_structure import *
+import create_plots
 
 default_location = os.getcwd()
 exported_info_folder = default_location + "\exported_info"
@@ -45,27 +45,83 @@ def create_main_image(company_ticker):
 
 
 def create_financial_charts(company):
-    get_financials = get_financial.GetFinancials(company, exported_info_folder)
+    get_financials = create_plots.Informations(company, exported_info_folder, "financials")
     print(f"Creating plot to see Financials details about {company}")
-    company_folder = check_and_create_folder(f'\{company}')
-    os.chdir(company_folder)
-    get_financials.default_net_income(default_location, column_name="Net Income")
-    get_financials.default_net_income(default_location, column_name="Research Development")
-    get_financials.default_net_income(default_location, column_name="Income Before Tax")
-    get_financials.default_net_income(default_location, column_name="Gross Profit")
-    get_financials.default_net_income(default_location, column_name="Ebit")
-    get_financials.default_net_income(default_location, column_name="Gross Profit")
-    get_financials.default_net_income(default_location, column_name="Total Revenue")
-    get_financials.default_net_income(default_location, column_name="Income Before Tax")
+    # company_folder = check_and_create_folder(f'\{company}')
+    # os.chdir(company_folder)
+    get_financials.default_sheet(default_location, column_name="Net Income")
+    get_financials.default_sheet(default_location, column_name="Research Development")
+    get_financials.default_sheet(default_location, column_name="Income Before Tax")
+    get_financials.default_sheet(default_location, column_name="Gross Profit")
+    get_financials.default_sheet(default_location, column_name="Ebit")
+    get_financials.default_sheet(default_location, column_name="Gross Profit")
+    get_financials.default_sheet(default_location, column_name="Total Revenue")
+    get_financials.default_sheet(default_location, column_name="Income Before Tax")
 
+
+def create_quarterly_financial_charts(company):
+    get_financials = create_plots.Informations(company, exported_info_folder, "quarterly_financials")
+    print(f"Creating plot to see Quarterly Financials details about {company}")
+    # company_folder = check_and_create_folder(f'\{company}')
+    # os.chdir(company_folder)
+    get_financials.default_sheet(default_location, column_name="Net Income")
+    get_financials.default_sheet(default_location, column_name="Research Development")
+    get_financials.default_sheet(default_location, column_name="Income Before Tax")
+    get_financials.default_sheet(default_location, column_name="Gross Profit")
+    get_financials.default_sheet(default_location, column_name="Ebit")
+    get_financials.default_sheet(default_location, column_name="Gross Profit")
+    get_financials.default_sheet(default_location, column_name="Total Revenue")
+    get_financials.default_sheet(default_location, column_name="Income Before Tax")
+
+
+def create_balance_sheet_charts(company):
+    get_balance_sheet = create_plots.Informations(company, exported_info_folder, "balance_sheet")
+    print(f"Creating plot to see Balance Sheet details about {company}")
+    # company_folder = check_and_create_folder(f'\{company}')
+    # os.chdir(company_folder)
+    get_balance_sheet.default_sheet(default_location, column_name="Cash")
+    get_balance_sheet.default_sheet(default_location, column_name="Total Current Assets")
+    # get_balance_sheet.default_balance_sheet(default_location, column_name="Long Term Investments")
+    # get_balance_sheet.default_balance_sheet(default_location, column_name="Short Term Investments")
+    get_balance_sheet.default_sheet(default_location, column_name="Long Term Debt")
+    get_balance_sheet.default_sheet(default_location, column_name="Total Assets")
+    get_balance_sheet.default_sheet(default_location, column_name="Total Liab")
+
+
+def create_quarterly_balance_sheet_charts(company):
+    get_balance_sheet = create_plots.Informations(company, exported_info_folder, "quarterly_balance_sheet")
+    print(f"Creating plot to see Quarterly Balance Sheet details about {company}")
+    # company_folder = check_and_create_folder(f'\{company}')
+    # os.chdir(company_folder)
+    get_balance_sheet.default_sheet(default_location, column_name="Cash")
+    get_balance_sheet.default_sheet(default_location, column_name="Total Current Assets")
+    # get_balance_sheet.default_balance_sheet(default_location, column_name="Long Term Investments")
+    # get_balance_sheet.default_balance_sheet(default_location, column_name="Short Term Investments")
+    get_balance_sheet.default_sheet(default_location, column_name="Long Term Debt")
+    get_balance_sheet.default_sheet(default_location, column_name="Total Assets")
+    get_balance_sheet.default_sheet(default_location, column_name="Total Liab")
+
+def create_cashflow_charts(company):
+    get_info_cashflow = create_plots.Informations(company, exported_info_folder, "cashflow")
+    print(f"Creating plot to see CashFlow details about {company}")
+    # company_folder = check_and_create_folder(f'\{company}')
+    # os.chdir(company_folder)
+    get_info_cashflow.default_sheet(default_location, column_name="Dividends Paid")
+
+def create_all_charts(company):
+    create_cashflow_charts(company)
+    create_financial_charts(company)
+    create_balance_sheet_charts(company)
+    create_quarterly_balance_sheet_charts(company)
+    create_quarterly_financial_charts(company)
 
 if __name__ == '__main__':
-    company_list = ["AAPL", "MSFT", "TSLA", "AMZN"]
-
+    company_list = ["AAPL", "MSFT"]
+    # , "TSLA", "AMZN"]
     print(f'Creating the structure folders...')
     create_structure()
 
     for company in company_list:
-        create_info_files(company)
-        create_main_image(company)
-        create_financial_charts(company)
+        # create_info_files(company)
+        # create_main_image(company)
+        create_all_charts(company)
