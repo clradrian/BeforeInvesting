@@ -4,8 +4,9 @@ from os import path
 
 
 class CreateStructureFolder:
-    def __init__(self, default_location):
+    def __init__(self, default_location, company):
         self.default_location = default_location
+        self.company = company
 
     def create_structure(self):
         current_working_directory = os.getcwd()
@@ -16,14 +17,12 @@ class CreateStructureFolder:
                 print(f'The {folder} already exists...')
             else:
                 os.mkdir(folder)
-
-    # def create_default_image(self):
-    #     default_image = self.default_location + '\\default_image'
-    #     logo_path = self.default_location + '\\logo\\logo.jpg'
-    #     os.chdir(default_image)
-    #     default_img = Image.new(mode="RGB", size=(1080, 1080))
-    #     logo_image_open = Image.open(logo_path).convert("RGBA")
-    #     offset = (450, 20)
-    #     default_img.paste(logo_image_open, offset, logo_image_open)
-    #     default_img.save("single_default.png")
-    #     os.chdir(self.default_location)
+    def check_and_create_folder(self, folder_name="exported_photos"):
+        folder_location = folder_name + '\\' + self.company
+        print(f'Create folder were info will be exported...')
+        if os.path.isdir(folder_location):
+            print(f'The {folder_name} already exists! Continuing...')
+        else:
+            os.mkdir(folder_location)
+            print(f'{folder_name} created! Location: {folder_location}')
+        return folder_location

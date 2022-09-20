@@ -40,6 +40,7 @@ class Investing(Draw):
             dict_ticker["day_low"] = company_info["dayLow"]
             dict_ticker["day_high"] = company_info["dayHigh"]
             dict_ticker["logo_url"] = company_info['logo_url']
+
         except  Exception as e:
             print(e)
         dividend_yield = ''
@@ -49,5 +50,6 @@ class Investing(Draw):
         market_cap = company_info['marketCap']
         dict_ticker["transformed_market_cap"] = calculate_long_numbers(market_cap)
         dict_ticker["transformed_revenue"] = calculate_long_numbers(dict_ticker["total_revenue"])
+        dict_ticker["profit_Margins"] = company_info['profitMargins']
         print(dict_ticker)
         return dict_ticker

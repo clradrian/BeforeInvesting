@@ -34,12 +34,12 @@ class Draw:
         photo_location = self.default_location + '\\default_image\\single_default.png'
         img = Image.open(photo_location)
         draw_image = ImageDraw.Draw(img)
-        font_location = self.default_location + '\\fonts\\AppleGaramond.ttf'
+        font_location = self.default_location + '\\fonts\\Roboto-Medium.ttf'
         main_font = self.open_fonts(font_location, 60)
         second_font = self.open_fonts(font_location, 40)
         info_font = self.open_fonts(font_location, 20)
-        font_color = "#FFFFFF"
-        header_font_color = "#ff0000"
+        font_color = "#000066"
+        header_font_color = "#330000"
         # self.center_text(img, main_font, stock_information["company_short_name"] + "(" + stock_information["ticker"] + ")",
         #                  stock_information["company_industry"] + " | " + stock_information["company_sector"], "Current Price: " + str(stock_information["current_price"]) + "$",
         #                  font_color)
@@ -48,9 +48,9 @@ class Draw:
         t1_width, t1_height = draw_image.textsize(stock_information["company_short_name"] + "(" + stock_information["ticker"] + ")", main_font)  # Get text1 size
         t2_width, t2_height = draw_image.textsize(stock_information["company_industry"] + " | " + stock_information["company_sector"], second_font)  # Get text2 size
         t3_width, t3_height = draw_image.textsize("Current Price: " + str(stock_information["current_price"]) + "$", second_font)  # Get text3 size
-        p1 = ((w - t1_width) / 2, h // 8.6)  # H-center align text1
-        p2 = ((w - t2_width) / 2, h // 5.7)  # H-center align text2 + h // 5
-        p3 = ((w - t3_width) / 2, h // 4.7)  # H-center align text3 + h // 2
+        p1 = ((w - t1_width) / 2, h // 16.6)  # H-center align text1
+        p2 = ((w - t2_width) / 2, h // 8.7)  # H-center align text2 + h // 5
+        p3 = ((w - t3_width) / 2, h // 6.7)  # H-center align text3 + h // 2
 
         draw_image.text(p1, stock_information["company_short_name"] + "(" + stock_information["ticker"] + ")", fill=font_color, font=main_font,
                         align="center")
@@ -62,29 +62,31 @@ class Draw:
         general_information_right_part = 320
         try:
             draw_image.text((general_information_left_part, general_information_right_part), "General Information:", fill=header_font_color, font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 40), "Market Cap: " + str(stock_information["transformed_market_cap"]), fill=font_color, font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 80), "Total Revenue: " + str(stock_information["transformed_revenue"]), fill=font_color, font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 120), "PE: " + str(stock_information["trailing_PE"]) + " | Forward PE: " + str(stock_information["forward_PE"]), fill=font_color, font=second_font,
+            draw_image.text((general_information_left_part, general_information_right_part + 40), "-Market Cap: " + str(stock_information["transformed_market_cap"]), fill=font_color, font=second_font, align="left")
+            draw_image.text((general_information_left_part, general_information_right_part + 80), "-Total Revenue: " + str(stock_information["transformed_revenue"]), fill=font_color, font=second_font, align="left")
+            draw_image.text((general_information_left_part, general_information_right_part + 120), "-PE: " + str(stock_information["trailing_PE"]) + " | Forward PE: " + str(stock_information["forward_PE"]), fill=font_color, font=second_font,
                             align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 160), "EPS: " + str(stock_information["trailing_Eps"]) + " | Forward EPS: " + str(stock_information["forward_Eps"]), fill=font_color,
+            draw_image.text((general_information_left_part, general_information_right_part + 160), "-EPS: " + str(stock_information["trailing_Eps"]) + " | Forward EPS: " + str(stock_information["forward_Eps"]), fill=font_color,
+                            font=second_font, align="left")
+            draw_image.text((general_information_left_part, general_information_right_part + 240), "-Profit Margin: " + str(stock_information["profit_Margins"]), fill=font_color,
                             font=second_font, align="left")
 
-            draw_image.text((general_information_left_part, general_information_right_part + 280), "Stock Price Targets: ", fill=header_font_color, font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 320), "LOW price: " + str(stock_information["target_low_price"]) + "$", fill=font_color, font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 360), "MEAN price: " + str(stock_information["target_mean_price"]) + "$", fill=font_color, font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 400), "HIGH price: " + str(stock_information["target_high_price"]) + "$", fill=font_color,
+            draw_image.text((general_information_left_part, general_information_right_part + 320), "Stock Price Targets: ", fill=header_font_color, font=second_font, align="left")
+            draw_image.text((general_information_left_part, general_information_right_part + 360), "-LOW price: " + str(stock_information["target_low_price"]) + "$", fill=font_color, font=second_font, align="left")
+            draw_image.text((general_information_left_part, general_information_right_part + 400), "-MEAN price: " + str(stock_information["target_mean_price"]) + "$", fill=font_color, font=second_font, align="left")
+            draw_image.text((general_information_left_part, general_information_right_part + 440), "-HIGH price: " + str(stock_information["target_high_price"]) + "$", fill=font_color,
                             font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 460), "Stock Price Evolution: ",
+            draw_image.text((general_information_left_part, general_information_right_part + 520), "Stock Price Evolution: ",
                             fill=header_font_color, font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 500), "52 Week Range: " + str(stock_information["fifty_two_week_low"]) + "$ - " + str(stock_information["fifty_two_week_high"]) + "$",
+            draw_image.text((general_information_left_part, general_information_right_part + 560), "-52 Week Range: " + str(stock_information["fifty_two_week_low"]) + "$ - " + str(stock_information["fifty_two_week_high"]) + "$",
                             fill=font_color, font=second_font, align="left")
-            draw_image.text((general_information_left_part, general_information_right_part + 540), "Day's Range : " + str(stock_information["day_low"]) + "$ - " + str(stock_information["day_high"]) + "$",
+            draw_image.text((general_information_left_part, general_information_right_part + 600), "-Day's Range : " + str(stock_information["day_low"]) + "$ - " + str(stock_information["day_high"]) + "$",
                             fill=font_color, font=second_font, align="left")
             if "dividend_yield" in stock_information.keys():
-                draw_image.text((general_information_left_part, general_information_right_part + 200), "Dividend yield: " + str(stock_information["dividend_yield"]) + '%', fill=font_color,
+                draw_image.text((general_information_left_part, general_information_right_part + 200), "-Dividend yield: " + str(stock_information["dividend_yield"]) + '%', fill=font_color,
                                 font=second_font, align="left")
             else:
-                draw_image.text((general_information_left_part, general_information_right_part + 200), "Dividend yield: 0%", fill=font_color, font=second_font,
+                draw_image.text((general_information_left_part, general_information_right_part + 200), "-Dividend yield: 0%", fill=font_color, font=second_font,
                                 align="left")
 
             # t4_width, t4_height = draw_image.textsize("*informations provided by Yahoo Finance", info_font)  # Get text3 size
@@ -93,7 +95,7 @@ class Draw:
 
             current_date = self.get_date()
             t5_width, t5_height = draw_image.textsize("(" + current_date + ")", second_font)  # Get text3 size
-            p5 = ((w - t5_width) / 2, h // 4.1)  # H-center align text1
+            p5 = ((w - t5_width) / 2, h // 5.5)  # H-center align text1
             draw_image.text(p5, "(" + current_date + ")", fill=font_color, font=second_font)
         except:
             pass

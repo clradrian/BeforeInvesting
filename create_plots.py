@@ -22,7 +22,7 @@ class Informations:
         get_net_income_column = t_get_df_financials[column_name]
         return get_net_income_column
 
-    def change_axis(self, column_name):
+    def change_axis(self, column_name, quarterly):
         df_balance_sheet_income = self.get_cashflow_df(column_name)
         date_axis = []
         for date in list(df_balance_sheet_income.index.values):
@@ -34,19 +34,23 @@ class Informations:
         for x in df_balance_sheet_income.head():
             new_values = calculate_long_numbers(x)
             transformed_values.append(new_values)
-        return sorted(date_axis), sorted(transformed_values)
+        if quarterly:
+            return sorted(date_axis), sorted(transformed_values)
+        else:
+            return sorted(date_axis), sorted(transformed_values)
 
-    def create_plot(self, column_name):
+    def create_plot(self, column_name, quarterly):
         folder_location = check_and_create_folder(folder_name="\exported_photos")
-        x_axis, y_axis = self.change_axis(column_name)
+        x_axis, y_axis = self.change_axis(column_name, quarterly)
         int_list = []
         for value in y_axis:
             delete_last_ch = value[:-1]
             get_last_ch = value[-1]
             int_list.append(float(delete_last_ch))
-        plt.style.use('dark_background')
-        plt.bar(x_axis, int_list, color="#77BC3F",
-                width=0.6, edgecolor='white')
+        plt.style.use('classic')
+        plt.bar(x_axis, int_list, color="#000066",
+                width=0.6)
+                # , edgecolor='white')
         plt.margins(0.1, 0.1)
         # plt.xlabel("Date")
         os.chdir(folder_location)
@@ -57,9 +61,9 @@ class Informations:
         plt.savefig(f'{self.company_ticker}_{column_name}.png', bbox_inches='tight')
         plt.clf()
 
-    def default_sheet(self, default_location, column_name):
+    def default_sheet(self, default_location, column_name, quarterly=None):
         os.chdir(default_location)
-        self.create_plot(column_name)
+        self.create_plot(column_name, quarterly)
         image_to_be_updated = default_location + '\\default_image\\single_default.png'
         img = Image.open(image_to_be_updated)
         os.chdir(default_location)

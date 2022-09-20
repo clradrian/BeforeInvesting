@@ -2,6 +2,7 @@ import yfinance as yf
 from draw import *
 import pandas as pd
 import matplotlib.pyplot as plt
+from utils import *
 
 
 class GetHistoricalData:
@@ -26,16 +27,18 @@ class GetHistoricalData:
         return hist
 
     def get_historical_data(self):
+        # check_and_create_folder('\exported_photos\DPZ')
         stock_data = self.get_stock_historical_data_5y()
         df = pd.DataFrame(stock_data)
         open_data = df["Open"]
         # data = stock_data.loc[:, "Open"].copy()
-        plt.style.use("dark_background")
-        open_data.plot(color="#77BC3F")
-        plt.style.use("dark_background")
+        plt.style.use("classic")
+        open_data.plot(color="#000066")
+        plt.style.use("classic")
+        plt.grid(axis='y', linestyle='-', linewidth=0.2)
         plt.margins(0.1, 0.1)
         plt.title(f"{self.company_ticker} Stock Evolution", fontweight='bold', size=16)
-        plt.ylabel("Price ($)", fontweight='bold')
+        plt.ylabel("Price per Share ($)", fontweight='bold')
         plt.savefig(f'{self.default_location}\exported_photos\{self.company_ticker}\{self.company_ticker}.png', bbox_inches='tight')
         plt.clf()
         image_to_be_updated = self.default_location + '\\default_image\\single_default.png'
