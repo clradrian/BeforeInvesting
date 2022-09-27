@@ -140,15 +140,13 @@ def get_historical_data(default_location):
     historical_data.get_historical_data()
 
 if __name__ == '__main__':
-    company = "HPQ"
+    company = "SONY"
     print(f'Creating the structure folders...')
-    create_structure(company)
-
-    # check_and_create_folder(exported_photos_folder + '\\' + company)
-    get_historical_data(default_location)
-    create_info_files(company)
-    get_main_info(company)
-    create_main_image(company)
+    # create_structure(company)
+    # get_historical_data(default_location)
+    # create_info_files(company)
+    # get_main_info(company)
+    # create_main_image(company)
     create_all_charts(company)
     create_quarterly_charts(company)
     create_dividend_chart(company)
