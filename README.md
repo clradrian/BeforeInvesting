@@ -4,7 +4,7 @@ BeforeInvesting is a project that gave me the opportunity to learn a little bit 
 
 Scope
 
-I developed these scripts to help me find informations about the companies listed on the New York Exchange Market.
+I developed these scripts to help me find informations about the companies listed on the New York Stock Exchange.
 
 How it works
 
