@@ -40,14 +40,21 @@ class Investing(Draw):
             dict_ticker["day_low"] = company_info["dayLow"]
             dict_ticker["day_high"] = company_info["dayHigh"]
             dict_ticker["logo_url"] = company_info['logo_url']
-        except:
-            pass
+            dict_ticker["freeCashflow"] = company_info['freeCashflow']
+            dict_ticker["pegRatio"] = company_info['pegRatio']
+            dict_ticker["ebitdaMargins"] = company_info['ebitdaMargins']
+
+        except Exception as e:
+            print(e)
         dividend_yield = ''
+        print(dict_ticker)
         if company_info['dividendRate']:
             dividend_rate = company_info['dividendRate']
             dict_ticker["dividend_yield"] = calculate_dividend_yield(dividend_rate, dict_ticker["current_price"])
         market_cap = company_info['marketCap']
         dict_ticker["transformed_market_cap"] = calculate_long_numbers(market_cap)
         dict_ticker["transformed_revenue"] = calculate_long_numbers(dict_ticker["total_revenue"])
+        dict_ticker["transformed_freeCashflow"] = calculate_long_numbers(dict_ticker["freeCashflow"])
+        dict_ticker["profit_Margins"] = company_info['profitMargins']
         print(dict_ticker)
         return dict_ticker
