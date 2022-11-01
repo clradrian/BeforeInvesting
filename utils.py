@@ -1,5 +1,7 @@
 from numerize import numerize
+from PIL import ImageFont
 import os
+from datetime import date
 
 
 def calculate_dividend_yield(dividend_rate, current_price):
@@ -29,3 +31,23 @@ def get_photo_location(ticker, folder_location):
     folder_location = folder_location + '\\'
     os.chdir(folder_location)
     return folder_location + image_name
+
+
+def open_fonts(font_path, size):
+    """ This function is used to initialize fonts """
+    my_font = ImageFont.truetype(font_path, size)
+    return my_font
+
+
+def save_photo(ticker, folder_location, img):
+    image_name = ticker + ".png"
+    os.chdir(folder_location)
+    print(f'Creating {image_name} photo with basic information...')
+    img.save(f"{ticker}.png")
+    return folder_location + image_name
+
+
+def get_date():
+    today = date.today()
+    current_date = today.strftime("%b-%d-%Y")
+    return current_date

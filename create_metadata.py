@@ -1,8 +1,8 @@
 import os
-
 import yfinance as yf
 import json
 from utils import check_and_create_folder
+
 
 class CreateMetadata:
     def __init__(self, company_ticker, default_location):

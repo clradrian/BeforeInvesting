@@ -41,7 +41,7 @@ class Informations:
         if quarterly:
             return sorted(date_axis), sorted(transformed_values)
         else:
-            return sorted(date_axis), sorted(transformed_values)
+            return date_axis, transformed_values
 
     def create_plot(self, column_name, quarterly):
         folder_location = check_and_create_folder(folder_name="\exported_photos")
@@ -57,6 +57,7 @@ class Informations:
                     width=0.6)
                     # , edgecolor='white')
             plt.margins(0.1, 0.1)
+            plt.grid(axis='y', linestyle='-', linewidth=0.1)
             # plt.xlabel("Date")
             os.chdir(folder_location)
             plt.ylabel(f"{column_name} ({get_last_ch})", fontweight='bold')

@@ -1,12 +1,12 @@
-import os
-
-from utils import check_and_create_folder
 from get_basic_info import *
 from create_metadata import *
 from create_structure import *
 import create_plots
 import recommendations
 import get_historical_market_data
+import sys
+
+company_name = sys.argv[1]
 
 
 default_location = os.getcwd()
@@ -27,14 +27,14 @@ def create_info_files(company):
     create_metadata = CreateMetadata(company, default_location)
     create_metadata.create_basic_info_file()
     create_metadata.create_financials_info_file()
-    create_metadata.create_quarterly_financials_info_file()
+    # create_metadata.create_quarterly_financials_info_file()
     create_metadata.create_balance_sheet_info_file()
-    create_metadata.create_quarterly_balance_sheet_info_file()
+    # create_metadata.create_quarterly_balance_sheet_info_file()
     create_metadata.create_cashflow_info_file()
-    create_metadata.create_quarterly_cashflow_info_file()
-    create_metadata.create_earnings_info_file()
-    create_metadata.create_quarterly_earnings_info_file()
-    create_metadata.create_recommendations_info_file()
+    # create_metadata.create_quarterly_cashflow_info_file()
+    # create_metadata.create_earnings_info_file()
+    # create_metadata.create_quarterly_earnings_info_file()
+    # create_metadata.create_recommendations_info_file()
 
 
 def get_main_info(company):
@@ -64,7 +64,7 @@ def create_financial_charts(company):
     get_financials.default_sheet(default_location, column_name="Income Before Tax")
     get_financials.default_sheet(default_location, column_name="Gross Profit")
     get_financials.default_sheet(default_location, column_name="Ebit")
-    get_financials.default_sheet(default_location, column_name="Gross Profit")
+    # get_financials.default_sheet(default_location, column_name="Gross Profit")
     get_financials.default_sheet(default_location, column_name="Total Revenue")
     get_financials.default_sheet(default_location, column_name="Income Before Tax")
 
@@ -135,18 +135,19 @@ def get_recommendations(company):
     get_recommendations.get_recommendations_df()
 
 
-def get_historical_data(default_location):
-    historical_data = get_historical_market_data.GetHistoricalData(company, default_location)
+def get_historical_data(default_location, company_name):
+    historical_data = get_historical_market_data.GetHistoricalData(company_name, default_location)
     historical_data.get_historical_data()
 
+
 if __name__ == '__main__':
-    company = "SONY"
     print(f'Creating the structure folders...')
-    # create_structure(company)
-    # get_historical_data(default_location)
-    # create_info_files(company)
-    # get_main_info(company)
-    # create_main_image(company)
-    create_all_charts(company)
-    create_quarterly_charts(company)
-    create_dividend_chart(company)
+    create_structure(company_name)
+    get_historical_data(default_location, company_name)
+    create_info_files(company_name)
+    get_main_info(company_name)
+    create_main_image(company_name)
+    create_all_charts(company_name)
+    # create_quarterly_charts(company_name)
+    create_dividend_chart(company_name)
+

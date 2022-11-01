@@ -34,6 +34,7 @@ class GetHistoricalData:
         # data = stock_data.loc[:, "Open"].copy()
         plt.style.use("classic")
         open_data.plot(color="#000066")
+        df.to_csv(f"{self.company_ticker}_historical_market_data.csv")
         plt.style.use("classic")
         plt.grid(axis='y', linestyle='-', linewidth=0.2)
         plt.margins(0.1, 0.1)
